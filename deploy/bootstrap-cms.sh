@@ -4,7 +4,7 @@ set -euo pipefail
 # One-command installer for servers where the project was deployed from an
 # archive rather than cloned with Git.
 domain="cms.intechdigital.ru"
-repository_archive="https://github.com/MIhAIl1534/INTECH/archive/refs/heads/main.tar.gz"
+repository_archive="https://github.com/dsfsdf1/INTECH-CMS/archive/refs/heads/main.tar.gz"
 source_env="/opt/intech-site/.env.production"
 release_dir="/opt/intech-cms-release"
 nginx_target="/etc/nginx/sites-available/$domain"
