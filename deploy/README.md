@@ -35,6 +35,12 @@ bash /tmp/cms/deploy/install-cms.sh
 | Контейнеры | проект compose `intech-cms`: `intech-cms-web-1`, `intech-cms-db-1` |
 | Автодеплой | `intech-cms-deploy.timer`, раз в 3 минуты |
 | Журнал | `/var/log/intech-cms-deploy.log` |
+| Swap | `/swapfile`, 4 ГБ (`deploy/enable-swap.sh`) |
+
+Памяти на сервере 3.8 ГБ, и её уже делят сайт с price-monitoring. Первая
+сборка это переполнила: ядро вызвало oom-killer и убило не сборку, а uvicorn
+соседнего проекта. Поэтому libvips собирает картинки в один поток
+(`VIPS_CONCURRENCY=1` в Dockerfile), а на сервере включён swap.
 
 ## Автообновление
 
