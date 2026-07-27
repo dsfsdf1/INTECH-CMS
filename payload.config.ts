@@ -25,9 +25,14 @@ import { seedInitialContent } from "./cms/seed";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const serverURL = process.env.NEXT_PUBLIC_SERVER_URL ?? "http://localhost:3000";
+const configuredOrigins = (process.env.CMS_ALLOWED_ORIGINS ?? "")
+  .split(",")
+  .map((origin) => origin.trim().replace(/\/$/, ""))
+  .filter(Boolean);
 const allowedOrigins = Array.from(
   new Set([
     serverURL,
+    ...configuredOrigins,
     "http://localhost:3000",
     "http://localhost:3100",
     "http://127.0.0.1:3100",
