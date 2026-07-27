@@ -1,6 +1,9 @@
 FROM node:22-bookworm-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+# Без TTY corepack спрашивает подтверждение на скачивание pnpm и ждёт ответа
+# вечно: под systemd сборка из-за этого зависала на середине.
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 RUN corepack enable
 
 FROM base AS dependencies
