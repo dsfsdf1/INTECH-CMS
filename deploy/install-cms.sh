@@ -51,6 +51,9 @@ EOF
 fi
 chmod 600 "$env_file"
 
+say "память под сборку"
+bash "$project_dir/deploy/enable-swap.sh"
+
 say "сборка и запуск"
 docker compose -p "$project" --env-file "$env_file" \
   -f "$project_dir/docker-compose.beget.yml" up -d --build --remove-orphans

@@ -13,6 +13,9 @@ WORKDIR /app
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
+# Один поток libvips вместо потока на ядро: пик памяти при оптимизации
+# картинок иначе не помещается в память сервера, и ядро убивает соседей.
+ENV VIPS_CONCURRENCY=1
 # Payload validates production variables while Next.js compiles route modules.
 # These build-only values are replaced by docker-compose at container runtime.
 ENV DATABASE_URI=postgresql://intech:intech@127.0.0.1:5432/intech
