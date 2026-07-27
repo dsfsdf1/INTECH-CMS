@@ -9,17 +9,19 @@ CMS живёт на сервере `159.194.238.3` в `/opt/intech-cms` — эт
 ## Установка
 
 Входящий SSH на сервер не работает, всё набирается в Терминале (VNC) в панели
-Beget. Консоль не передаёт Shift, поэтому команды — без шифтовых символов:
+Beget. Консоль не передаёт Shift, поэтому в строках нет ни одного шифтового
+символа — `wget` без схемы сам подставит http, а GitHub переведёт на https:
 
 ```
-git -C /opt/intech-site fetch origin
-git -C /opt/intech-site reset --hard origin/main
-bash /opt/intech-site/deploy/install-cms.sh
+wget -O /tmp/cms.tar.gz codeload.github.com/dsfsdf1/INTECH-CMS/tar.gz/refs/heads/main
+mkdir -p /tmp/cms
+tar -xzf /tmp/cms.tar.gz -C /tmp/cms --strip-components 1
+bash /tmp/cms/deploy/install-cms.sh
 ```
 
-Скрипт в репозитории сайта только клонирует этот репозиторий в
-`/opt/intech-cms` и передаёт работу `deploy/install-cms.sh` отсюда. Дальше всё
-делается само: секреты, сборка, домен в Caddy, автодеплой.
+Архив нужен только чтобы занести в консоль первую команду: `install-cms.sh`
+дальше делает настоящий `git clone` в `/opt/intech-cms`, и обновляется сервер
+уже из git. Секреты, сборка, домен в Caddy и таймер — тоже на нём.
 
 Повторный запуск безопасен: код обновляется, `.env.production` и база
 остаются на месте.
